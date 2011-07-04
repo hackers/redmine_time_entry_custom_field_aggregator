@@ -1,0 +1,19 @@
+<h2>Aggregator#index</h2>
+
+<% form_tag do %>
+プロジェクト一覧
+<%= select(:project, :id, @projects.collect { |d| [d.name, d.id] }, {} ) %>
+
+<%= submit_tag '選択' %>
+
+<% end %>
+
+<% if @project %>
+  <ul>
+  <% for u in @project.users %>
+    <li><%= u.login %></li>
+    <li></li>
+  <% end %>
+  </ul>
+<% end %>
+
