@@ -3,17 +3,35 @@
 <% form_tag do %>
 プロジェクト一覧
 <%= select(:project, :id, @projects.collect { |d| [d.name, d.id] }, {} ) %>
+<% if @project %>
+  ユーザ一覧
+  <%= select(:user, :id, @project.users.collect { |d| [d.login, d.id] }, {}) %>
+<% end %>
 
 <%= submit_tag '選択' %>
 
+<% if @entries %>
+  <table border="1" cellspacing="1">
+  <tr>
+    <th>日付</th>
+    <% @headers.each do |header_name| %>
+      <th><%= header_name %></th>
+    <% end %>
+  </tr>
+  <% @month_index.each do |aday| %>
+    <tr>
+    <td><%= aday %></td>
+    <% @data_table[aday].each do |hours| %>
+      <td><%= hours %></td>
+    <% end %>
+    </tr>
+  <% end %> 
+  <td>合計</td>
+  <% @sum_all.each do |hours| %>
+    <td><%= hours %></td>
+  <% end %>
+  </table>
 <% end %>
 
-<% if @project %>
-  <ul>
-  <% for u in @project.users %>
-    <li><%= u.login %></li>
-    <li></li>
-  <% end %>
-  </ul>
 <% end %>
 
