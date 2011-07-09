@@ -21,9 +21,11 @@ class AggregatorController < ApplicationController
     if @project and user
 
       custom_fields = CustomField.find(:all, 
-                                        :conditions => {:type => 'TimeEntryCustomField', 
-                                                        :field_format => 'float'},
-                                        :order => :position)
+                                       :conditions => {
+                                          :type => 'TimeEntryCustomField', 
+                                          :field_format => 'float'
+                                       },
+                                       :order => :position)
       @headers = [l(:cfa_table_header_hours)]
       custom_fields.each do |custom_field|
         @headers << custom_field.name
@@ -76,24 +78,12 @@ class AggregatorController < ApplicationController
 
   def table_to_csv(headers, month_index, data_table, sum_all)
     decimal_separator = l(:general_csv_decimal_separator)
-    export = FasterCSV.generate(:col_sep => l(:general_csv_separator)) do |csv|
-      row = [l(:cfa_table_header_date)]
-      headers.each do |header|
-        row << header
-      end
-      csv << row
+    export = FCSV.generate(:col_sep => l(:general_csv_separator)) do |csv|
+      csv << headers.unshift(l(:cfa_table_header_date))
       month_index.each do |aday|
-        row = [aday]
-        data_table[aday].each do |value|
-          row << value
-        end
-        csv << row
+        csv << data_table[aday].unshift(aday)
       end
-      row = [l(:cfa_table_total)]
-      sum_all.each do |value|
-        row << value
-      end
-      csv << row
+      csv << sum_all.unshift(l(:cfa_table_total))
     end
     export 
   end
