@@ -3,7 +3,6 @@
 <% form_tag({:action => 'index'}, {:method => 'get'}) do %>
   <%= select(:year, :id, @years, {:selected => @year}, {}) %>/
   <%= select(:month, :id, @months, {:selected => @month}, {}) %>
-  <input type="hidden" name="project_id" value="<%= @project.identifier %>" />
 <%= submit_tag l(:cfa_show_button) %>
 <% end %>
 
