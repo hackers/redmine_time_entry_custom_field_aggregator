@@ -15,8 +15,8 @@ class AggregatorController < ApplicationController
     @months = (1 .. 12).to_a
 
     user = User.current
-    @year = params.has_key?(:year) ? params[:year][:id].to_i : Date.today.year
-    @month = params.has_key?(:month) ? params[:month][:id].to_i : Date.today.month
+    @year = params.has_key?(:year) ? params[:year].to_i : Date.today.year
+    @month = params.has_key?(:month) ? params[:month].to_i : Date.today.month
 
     if @project and user
 
@@ -77,19 +77,23 @@ class AggregatorController < ApplicationController
   def table_to_csv(headers, month_index, data_table, sum_all)
     decimal_separator = l(:general_csv_decimal_separator)
     export = FasterCSV.generate(:col_sep => l(:general_csv_separator)) do |csv|
-      csv << headers
+      row = [l(:cfa_table_header_date)]
+      headers.each do |header|
+        row << header
+      end
+      csv << row
       month_index.each do |aday|
-        data = [aday]
+        row = [aday]
         data_table[aday].each do |value|
-          data << value
+          row << value
         end
-        csv << data
+        csv << row
       end
-      data = [l(:cfa_table_total)]
+      row = [l(:cfa_table_total)]
       sum_all.each do |value|
-        data << value
+        row << value
       end
-      csv << data
+      csv << row
     end
     export 
   end

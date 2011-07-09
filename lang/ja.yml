@@ -5,3 +5,4 @@ ja:
   cfa_table_header_hours: "時間"
   cfa_table_header_date: "日付"
   cfa_table_total: "合計"
+  cfa_download_csv: "CSVをダウンロード"

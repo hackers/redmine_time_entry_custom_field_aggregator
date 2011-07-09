@@ -5,3 +5,4 @@ en:
   cfa_table_header_hours: "hours"
   cfa_table_header_date: "date"
   cfa_table_total: "Total"
+  cfa_download_csv: "Download CSV"

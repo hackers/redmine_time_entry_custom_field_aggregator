@@ -1,12 +1,17 @@
 <h2><%= l(:cfa_menu) %></h2>
 
 <% form_tag({:action => 'index'}, {:method => 'get'}) do %>
-  <%= select(:year, :id, @years, {:selected => @year}, {}) %>/
-  <%= select(:month, :id, @months, {:selected => @month}, {}) %>
+  <select id="year" name="year">
+  <%= options_for_select(@years, :selected => @year) %>
+  </select>
+  <select id="month" name="month">
+  <%= options_for_select(@months, :selected => @month) %>
+  </select>
 <%= submit_tag l(:cfa_show_button) %>
 <% end %>
 
 <h3><%= "#{@year}/#{@month}" %></h3>
+<%= link_to l(:cfa_download_csv), :action => 'index', :format => 'csv', :year => @year, :month => @month %>
 <table border="1" cellspacing="1">
 <tr>
   <th><%= l(:cfa_table_header_date) %></th>
