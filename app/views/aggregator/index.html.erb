@@ -6,11 +6,16 @@
 <% if @project %>
   ユーザ一覧
   <%= select(:user, :id, @project.users.collect { |d| [d.login, d.id] }, {}) %>
+
+  <%= select(:year, :id, @years, {:selected => @year}, {}) %>
+  <%= select(:month, :id, @months, {:selected => @month}, {}) %>
 <% end %>
+
 
 <%= submit_tag '選択' %>
 
 <% if @entries %>
+  <h3><%= "#{@year}年#{@month}月" %></h3>
   <table border="1" cellspacing="1">
   <tr>
     <th>日付</th>
