@@ -5,6 +5,8 @@ Redmine::Plugin.register :redmine_custom_field_aggregator do
   author 'Author name'
   description 'This is a plugin for Redmine'
   version '0.0.1'
-  url 'http://example.com/path/to/plugin'
-  author_url 'http://example.com/about'
+  url 'http://github.com/hackers/redmine_custom_field_aggregator'
+  author_url 'http://github.com/hackers'
+  permission :sample, {:aggregator => [:index]}, :public => true
+  menu :project_menu, :sample, { :controller => 'aggregator', :action => 'index'}, :caption => '時間集計', :param => :project_id
 end

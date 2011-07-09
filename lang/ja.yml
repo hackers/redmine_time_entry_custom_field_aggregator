@@ -1,0 +1,7 @@
+# Japanese strings go here
+ja:
+  cfa_menu: "時間集計"
+  cfa_show_button: "表示"
+  cfa_table_header_hours: "時間"
+  cfa_table_header_date: "日付"
+  cfa_table_total: "合計"

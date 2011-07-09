@@ -1,42 +1,32 @@
-<h2>Aggregator#index</h2>
+<h2><%= l(:cfa_menu) %></h2>
 
-<% form_tag do %>
-プロジェクト一覧
-<%= select(:project, :id, @projects.collect { |d| [d.name, d.id] }, {} ) %>
-<% if @project %>
-  ユーザ一覧
-  <%= select(:user, :id, @project.users.collect { |d| [d.login, d.id] }, {}) %>
-
-  <%= select(:year, :id, @years, {:selected => @year}, {}) %>
+<% form_tag({:action => 'index'}, {:method => 'get'}) do %>
+  <%= select(:year, :id, @years, {:selected => @year}, {}) %>/
   <%= select(:month, :id, @months, {:selected => @month}, {}) %>
+  <input type="hidden" name="project_id" value="<%= @project.identifier %>" />
+<%= submit_tag l(:cfa_show_button) %>
 <% end %>
 
-
-<%= submit_tag '選択' %>
-
-<% if @entries %>
-  <h3><%= "#{@year}年#{@month}月" %></h3>
-  <table border="1" cellspacing="1">
+<h3><%= "#{@year}/#{@month}" %></h3>
+<table border="1" cellspacing="1">
+<tr>
+  <th><%= l(:cfa_table_header_date) %></th>
+  <% @headers.each do |header_name| %>
+    <th><%= header_name %></th>
+  <% end %>
+</tr>
+<% @month_index.each do |aday| %>
   <tr>
-    <th>日付</th>
-    <% @headers.each do |header_name| %>
-      <th><%= header_name %></th>
-    <% end %>
-  </tr>
-  <% @month_index.each do |aday| %>
-    <tr>
-    <td><%= aday %></td>
-    <% @data_table[aday].each do |hours| %>
-      <td><%= hours %></td>
-    <% end %>
-    </tr>
-  <% end %> 
-  <td>合計</td>
-  <% @sum_all.each do |hours| %>
+  <td><%= aday %></td>
+  <% @data_table[aday].each do |hours| %>
     <td><%= hours %></td>
   <% end %>
-  </table>
+  </tr>
+<% end %> 
+<td><%= l(:cfa_table_total) %></td>
+<% @sum_all.each do |hours| %>
+  <td><%= hours %></td>
 <% end %>
+</table>
 
-<% end %>
 

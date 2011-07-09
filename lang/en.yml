@@ -1,2 +1,7 @@
 # English strings go here
-my_label: "My label"
+en:
+  cfa_menu: "Time Aggregator"
+  cfa_show_button: "Show"
+  cfa_table_header_hours: "hours"
+  cfa_table_header_date: "date"
+  cfa_table_total: "Total"

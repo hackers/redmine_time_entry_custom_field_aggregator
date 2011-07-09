@@ -5,15 +5,14 @@ class AggregatorController < ApplicationController
   YEAR_RANGE = 10
 
   def index
-    @projects = Project.all
 
-    if params.has_key? :project
-      @project = Project.find(params[:project][:id])
-      @years = (Date::new(YEAR_MIN).year .. Date.today.year + YEAR_RANGE).to_a
-      @months = (1 .. 12).to_a
+    if params.has_key? :project_id
+      @project = Project.find_by_identifier(params[:project_id])
     end
+    @years = (Date::new(YEAR_MIN).year .. Date.today.year + YEAR_RANGE).to_a
+    @months = (1 .. 12).to_a
 
-    @user = User.find(params[:user][:id]) if params.has_key? :user
+    @user = User.current
     @year = params.has_key?(:year) ? params[:year][:id].to_i : Date.today.year
     @month = params.has_key?(:month) ? params[:month][:id].to_i : Date.today.month
 
@@ -23,7 +22,7 @@ class AggregatorController < ApplicationController
                                         :conditions => {:type => 'TimeEntryCustomField', 
                                                         :field_format => 'float'},
                                         :order => :position)
-      @headers = ['時間']
+      @headers = [l(:cfa_table_header_hours)]
       @custom_fields.each do |custom_field|
         @headers << custom_field.name
       end
