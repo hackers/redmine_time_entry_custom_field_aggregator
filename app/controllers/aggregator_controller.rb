@@ -42,7 +42,7 @@ class AggregatorController < ApplicationController
       end
 
       entries = TimeEntry.find(:all, 
-                                :conditions => {:user_id => @user, 
+                                :conditions => {:user_id => user, 
                                                 :project_id => @project })
       entries.each do |entry|
         if not @data_table.has_key? entry.spent_on.to_s
