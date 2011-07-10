@@ -29,8 +29,12 @@ class AggregatorController < ApplicationController
                                        },
                                        :order => :position)
       @headers = [l(:cfa_table_header_hours)]
+      custom_fields_relation = Hash.new
+      i = 2
       custom_fields.each do |custom_field|
         @headers << custom_field.name
+        custom_fields_relation[custom_field.id] = i
+        i += 1
       end
  
       ## 日ごとのデータ集計
@@ -46,8 +50,12 @@ class AggregatorController < ApplicationController
       end
 
       entries = TimeEntry.find(:all, 
-                                :conditions => {:user_id => user, 
-                                                :project_id => @project })
+                                :conditions => ["user_id = :user and project_id = :project and spent_on >= :date_st and spent_on <= :date_ed", 
+                                  {:user => user,
+                                   :project => @project,
+                                   :date_st => selected_date.beginning_of_month,
+                                   :date_ed => selected_date.at_end_of_month}])
+
       entries.each do |entry|
         if not @data_table.has_key? entry.spent_on.to_s
           next
@@ -70,7 +78,9 @@ class AggregatorController < ApplicationController
     
     respond_to do |format|
       format.html
-      format.csv { send_data(table_to_csv(@headers, @month_index, @data_table, @sum_all), :type => 'text/csv; header=present', :filename => 'export.csv') }
+      format.csv { send_data(table_to_csv(@headers, @month_index, @data_table, @sum_all), 
+                             :type => 'text/csv; header=present', 
+                             :filename => 'export.csv') }
     end
      
     end # if project and user
