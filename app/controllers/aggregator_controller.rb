@@ -3,6 +3,8 @@ require 'fastercsv'
 class AggregatorController < ApplicationController
   unloadable
 
+  include AggregatorHelper
+
   YEAR_MIN = 2000
   YEAR_RANGE = 10
 
@@ -73,19 +75,4 @@ class AggregatorController < ApplicationController
      
     end # if project and user
   end
-  
-  private
-
-  def table_to_csv(headers, month_index, data_table, sum_all)
-    decimal_separator = l(:general_csv_decimal_separator)
-    export = FCSV.generate(:col_sep => l(:general_csv_separator)) do |csv|
-      csv << headers.unshift(l(:cfa_table_header_date))
-      month_index.each do |aday|
-        csv << data_table[aday].unshift(aday)
-      end
-      csv << sum_all.unshift(l(:cfa_table_total))
-    end
-    export 
-  end
-
 end
