@@ -1,3 +1,0 @@
-= custom_field_aggregator
-
-Description goes here
