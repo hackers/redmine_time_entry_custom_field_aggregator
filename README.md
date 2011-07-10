@@ -13,22 +13,22 @@ Reqiurements
 Installation
 ------------
 
-1. Git-clone this plugin from github.
+* Git-clone this plugin from github.
 
 like that.
 
     $ cd $RAILS_ROOT/vendor/plugins
     $ git clone git://github.com/hackers/redmine_custom_field_aggregator.git
 
-2. Restart your Redmine.
+* Restart your Redmine.
 
-3. Login to your Redmine.
+* Login to your Redmine.
 
-4. Enable this plugin in a project.
+* Enable this plugin in a project.
 
 select menu like that.
 
     [Projects] -> [the project that you want to sum up spent time] -> 
-    [Settings] -> [Modules] -> [Check to "Custom field aggregaotr]
+    [Settings] -> [Modules] -> [Check to "Custom field aggregator]
 
-5. Go to [Time Aggregator].
+* Go to [Time Aggregator].

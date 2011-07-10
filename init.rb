@@ -9,6 +9,6 @@ Redmine::Plugin.register :redmine_custom_field_aggregator do
   author_url 'http://github.com/hackers'
   project_module :custom_field_aggregator do
     permission :view_table, {:aggregator => [:index]}, :public => true
-    menu :project_menu, :view_table, { :controller => 'aggregator', :action => 'index'}, :caption => '時間集計', :param => :project_id
+    menu :project_menu, :view_table, { :controller => 'aggregator', :action => 'index'}, :caption => :cfa_menu, :param => :project_id
   end
 end
