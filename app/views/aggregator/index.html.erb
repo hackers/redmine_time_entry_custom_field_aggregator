@@ -14,7 +14,6 @@
 <%= link_to l(:cfa_download_csv), :action => 'index', :format => 'csv', :year => @year, :month => @month %>
 <table border="1" cellspacing="1">
 <tr>
-  <th><%= l(:cfa_table_header_date) %></th>
   <% @headers.each do |header_name| %>
     <th><%= header_name %></th>
   <% end %>
