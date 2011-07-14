@@ -14,20 +14,20 @@
 <%= link_to l(:cfa_download_csv), :action => 'index', :format => 'csv', :year => @year, :month => @month %>
 <table border="1" cellspacing="1">
 <tr>
-  <% @headers.each do |header_name| %>
+  <% @aggregator.headers.each do |header_name| %>
     <th><%= header_name %></th>
   <% end %>
 </tr>
-<% @month_index.each do |aday| %>
+<% @aggregator.days.each do |aday| %>
   <tr>
   <td><%= aday %></td>
-  <% @data_table[aday].each do |hours| %>
+  <% @aggregator.data_table[aday].each do |hours| %>
     <td><%= hours %></td>
   <% end %>
   </tr>
 <% end %> 
 <td><%= l(:cfa_table_total) %></td>
-<% @sum_all.each do |hours| %>
+<% @aggregator.sum_all.each do |hours| %>
   <td><%= hours %></td>
 <% end %>
 </table>
