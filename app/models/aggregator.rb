@@ -10,8 +10,7 @@ class Aggregator
                                        "type = :type and field_format in ('float', 'int')",
                                        {:type => 'TimeEntryCustomField'}],
                                      :order => :position)
-    #@headers = [l(:cfa_table_header_date), l(:cfa_table_header_hours)]
-    @headers = ['日付','時間']
+    @headers = [:cfa_table_header_date, :cfa_table_header_hours]
     @headers.concat(custom_fields.map {|x| x.name})
     @days = (date_st .. date_ed).to_a
     @days = @days.map { |x| x.to_s }

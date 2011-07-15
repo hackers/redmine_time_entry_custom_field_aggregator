@@ -15,7 +15,7 @@
 <table border="1" cellspacing="1">
 <tr>
   <% @aggregator.headers.each do |header_name| %>
-    <th><%= header_name %></th>
+    <th><%= l(header_name).start_with?('translation missing:') ? header_name : l(header_name)%></th>
   <% end %>
 </tr>
 <% @aggregator.days.each do |aday| %>
