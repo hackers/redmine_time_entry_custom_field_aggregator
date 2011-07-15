@@ -1,7 +1,5 @@
 class Aggregator
   
-  attr_accessor :headers, :days, :data_table, :sum_all
-
   def initialize(project, date_st=Date.today.beginning_of_month, 
                           date_ed=Date.today.at_end_of_month)
     @date_st = date_st
@@ -9,16 +7,16 @@ class Aggregator
     @project = project
   end
 
-  def each_days_table
-    @data_table = Hash[*days.zip(Array.new(days.length, 0)).flatten]
-    @data_table.each do |key, val|
-      @data_table[key] = Array.new(headers.length-1, 0)
+  def days
+    days_hash = Hash[*days_index.zip(Array.new(days_index.length, 0)).flatten]
+    days_hash.each do |key, val|
+      days_hash[key] = Array.new(headers.length-1, 0)
     end
     entries.each do |entry|
-      if not @data_table.has_key? entry.spent_on.to_s
+      if not days_hash.has_key? entry.spent_on.to_s
         next
       end
-      @data_table[entry.spent_on.to_s][0] += entry.hours
+      days_hash[entry.spent_on.to_s][0] += entry.hours
       i = 1
       custom_fields.each do |custom_field|
         custom_values = CustomValue.find(:all, 
@@ -26,18 +24,23 @@ class Aggregator
                                            :customized_id => entry.id, 
                                            :custom_field_id => custom_field.id})
         custom_values.each do |custom_value|
-          @data_table[entry.spent_on.to_s][i] += custom_value.value.to_f
+          days_hash[entry.spent_on.to_s][i] += custom_value.value.to_f
         end
         i += 1
       end
     end
-    @data_table
+
+    _days = []
+    days_index.each do |aday|
+      _days << days_hash[aday].unshift(aday)
+    end
+    _days
   end
 
-  def sum
-    @sum_all = Array.new(headers.length-1, 0)
+  def sum_all
+    _sum_all = Array.new(headers.length-1, 0)
     entries.each do |entry|
-      @sum_all[0] += entry.hours
+      _sum_all[0] += entry.hours
       i = 1
       custom_fields.each do |custom_field|
         custom_values = CustomValue.find(:all, 
@@ -45,12 +48,12 @@ class Aggregator
                                            :customized_id => entry.id, 
                                            :custom_field_id => custom_field.id})
         custom_values.each do |custom_value|
-          @sum_all[i] += custom_value.value.to_f
+          _sum_all[i] += custom_value.value.to_f
         end
         i += 1
       end
     end
-    @sum_all
+    _sum_all
   end
 
   def custom_fields
@@ -65,7 +68,7 @@ class Aggregator
     [:cfa_table_header_date, :cfa_table_header_hours].concat(custom_fields.map {|x| x.name})
   end
 
-  def days
+  def days_index
     (@date_st .. @date_ed).map {|x| x.to_s}
   end
 

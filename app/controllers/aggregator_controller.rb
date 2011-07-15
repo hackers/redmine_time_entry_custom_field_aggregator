@@ -25,15 +25,14 @@ class AggregatorController < ApplicationController
       selected_date = Date::new(@year.to_i, @month.to_i)
       @aggregator = Aggregator::new(@project, selected_date.beginning_of_month,
                                    selected_date.at_end_of_month)
-      @aggregator.each_days_table
-      @aggregator.sum
+      @days = @aggregator.days
+      @sum_all = @aggregator.sum_all
     end
 
     respond_to do |format|
       format.html
-      format.csv { send_data(table_to_csv(@aggregator.headers, @aggregator.days, @aggregator.data_table, @aggregator.sum_all), 
-                             :type => 'text/csv; header=present', 
-                             :filename => 'export.csv') }
+      format.csv { send_data(table_to_csv(@aggregator), :type => 'text/csv; header=present', 
+                                                        :filename => 'export.csv') }
 
     end
   end

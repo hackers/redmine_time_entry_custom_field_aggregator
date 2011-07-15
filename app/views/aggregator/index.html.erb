@@ -20,14 +20,13 @@
 </tr>
 <% @aggregator.days.each do |aday| %>
   <tr>
-  <td><%= aday %></td>
-  <% @aggregator.data_table[aday].each do |hours| %>
-    <td><%= hours %></td>
+  <% aday.each do |cell| %>
+    <td><%= cell %></td>
   <% end %>
   </tr>
 <% end %> 
 <td><%= l(:cfa_table_total) %></td>
-<% @aggregator.sum_all.each do |hours| %>
+<% @sum_all.each do |hours| %>
   <td><%= hours %></td>
 <% end %>
 </table>
