@@ -25,6 +25,8 @@ class AggregatorController < ApplicationController
       selected_date = Date::new(@year.to_i, @month.to_i)
       @aggregator = Aggregator::new(@project, selected_date.beginning_of_month,
                                    selected_date.at_end_of_month)
+      @aggregator.each_days_table
+      @aggregator.sum
     end
 
     respond_to do |format|
