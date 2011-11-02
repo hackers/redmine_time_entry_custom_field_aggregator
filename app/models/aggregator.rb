@@ -1,7 +1,8 @@
 class Aggregator
   
-  def initialize(project, date_st=Date.today.beginning_of_month, 
+  def initialize(project, user, date_st=Date.today.beginning_of_month, 
                           date_ed=Date.today.at_end_of_month)
+    @user = user
     @date_st = date_st
     @date_ed = date_ed
     @project = project
@@ -77,7 +78,7 @@ class Aggregator
                              :conditions => [
                                "user_id = :user and project_id = :project 
                                 and spent_on >= :date_st and spent_on <= :date_ed",
-                               {:user => User.current,
+                               {:user => @user,
                                 :project => @project,
                                 :date_st => @date_st,
                                 :date_ed => @date_ed}

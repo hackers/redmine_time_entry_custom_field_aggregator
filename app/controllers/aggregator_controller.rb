@@ -16,14 +16,14 @@ class AggregatorController < ApplicationController
     @years = (Date::new(YEAR_MIN).year .. Date.today.year + YEAR_RANGE).to_a
     @months = (1 .. 12).to_a
 
-    user = User.current
+    @user = params.has_key?(:user) ? User.find(params[:user]) : User.current
     @year = params.has_key?(:year) ? params[:year].to_i : Date.today.year
     @month = params.has_key?(:month) ? params[:month].to_i : Date.today.month
 
-    if @project and user
+    if @project and @user
 
       selected_date = Date::new(@year.to_i, @month.to_i)
-      @aggregator = Aggregator::new(@project, selected_date.beginning_of_month,
+      @aggregator = Aggregator::new(@project, @user, selected_date.beginning_of_month,
                                    selected_date.at_end_of_month)
       @days = @aggregator.days
       @sum_all = @aggregator.sum_all

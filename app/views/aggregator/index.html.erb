@@ -1,13 +1,17 @@
 <h2><%= l(:cfa_menu) %></h2>
 
 <% form_tag({:action => 'index'}, {:method => 'get'}) do %>
+  <select id="user" name="user">
+    <%= options_from_collection_for_select(@project.members, 'id', 'name', :selected => @user.id) %>
+  </select>
+  <br/>
   <select id="year" name="year">
-  <%= options_for_select(@years, :selected => @year) %>
+    <%= options_for_select(@years, :selected => @year) %>
   </select>
   <select id="month" name="month">
-  <%= options_for_select(@months, :selected => @month) %>
+    <%= options_for_select(@months, :selected => @month) %>
   </select>
-<%= submit_tag l(:cfa_show_button) %>
+  <%= submit_tag l(:cfa_show_button) %>
 <% end %>
 
 <h3><%= "#{@year}/#{@month}" %></h3>
