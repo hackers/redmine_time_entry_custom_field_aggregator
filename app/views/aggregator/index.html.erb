@@ -2,7 +2,7 @@
 
 <% form_tag({:action => 'index'}, {:method => 'get'}) do %>
   <select id="user" name="user">
-    <%= options_from_collection_for_select(@project.members, 'id', 'name', :selected => @user.id) %>
+    <%= options_from_collection_for_select(@project.members, 'user_id', 'name', :selected => @user.id) %>
   </select>
   <br/>
   <select id="year" name="year">
