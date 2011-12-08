@@ -16,4 +16,13 @@ module AggregatorHelper
     end
     export 
   end
+
+  def table_to_json(aggregator)
+    data = []
+    header = [:day, :time, :night, :weekend]
+    aggregator.days.each do |aday|
+      ary = [header, aday].transpose
+      data << Hash[*ary.flatten]
+    end
+  end
 end

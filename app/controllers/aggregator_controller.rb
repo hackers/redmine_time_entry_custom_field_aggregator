@@ -34,6 +34,8 @@ class AggregatorController < ApplicationController
       format.csv { send_data(table_to_csv(@aggregator), :type => 'text/csv; header=present', 
                                                         :filename => 'export.csv') }
 
+      format.json { render :json => table_to_json(@aggregator) }
+
     end
   end
 end
