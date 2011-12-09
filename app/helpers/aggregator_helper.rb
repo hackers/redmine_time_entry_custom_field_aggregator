@@ -19,10 +19,15 @@ module AggregatorHelper
 
   def table_to_json(aggregator)
     data = []
-    header = [:day, :time, :night, :weekend]
+    header = []
+    aggregator.headers.each do |col|
+      col = l(col).start_with?('translation missing:') ? col : l(col)
+      header << col
+    end
     aggregator.days.each do |aday|
       ary = [header, aday].transpose
       data << Hash[*ary.flatten]
     end
+    data
   end
 end
