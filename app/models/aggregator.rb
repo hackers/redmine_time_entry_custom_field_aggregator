@@ -14,10 +14,11 @@ class Aggregator
       days_hash[key] = Array.new(headers.length-1, 0)
     end
     entries.each do |entry|
-      if not days_hash.has_key? entry.spent_on.to_s
+      target_date = entry.issue.start_date.to_s
+      if not days_hash.has_key? target_date
         next
       end
-      days_hash[entry.spent_on.to_s][0] += entry.hours
+      days_hash[target_date][0] += entry.hours
       i = 1
       custom_fields.each do |custom_field|
         custom_values = CustomValue.find(:all, 
@@ -25,7 +26,7 @@ class Aggregator
                                            :customized_id => entry.id, 
                                            :custom_field_id => custom_field.id})
         custom_values.each do |custom_value|
-          days_hash[entry.spent_on.to_s][i] += custom_value.value.to_f
+          days_hash[target_date][i] += custom_value.value.to_f
         end
         i += 1
       end
