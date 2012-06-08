@@ -1,6 +1,6 @@
 require 'redmine'
 
-Redmine::Plugin.register :redmine_custom_field_aggregator do
+Redmine::Plugin.register :redmine_time_entry_custom_field_aggregator do
   name 'Redmine Time Entry Custom Field Aggregator plugin'
   author 'Yusaku ONO'
   description "This plugin enables to sum up spent time and custom field's values."
