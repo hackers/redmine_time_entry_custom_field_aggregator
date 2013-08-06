@@ -1,8 +1,5 @@
 if Rails.version.to_f >= 3.0
-  scope :controller => 'aggregator', :action => 'index' do
-    match 'projects/:project_id/aggregator'
-    match 'projects/:project_id/aggregator.:format'
-  end
+  get 'projects/:project_id/aggregator', :to => 'aggregator#index'
 else
   ActionController::Routing::Routes.draw do |map|
     map.with_options :controller => 'aggregator', :action => 'index' do |aggregator|
